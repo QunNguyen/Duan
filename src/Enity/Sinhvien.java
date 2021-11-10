@@ -69,6 +69,9 @@ public class Sinhvien {
         this.nganh = nganh;
     }
     
+    public Object[] toArray(){
+        return new Object[]{msv,ten,ngaysinh,lop,nganh};
+    }
     
     
 }

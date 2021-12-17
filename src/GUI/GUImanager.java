@@ -175,8 +175,7 @@ public class GUImanager extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton7)
-                                        .addGap(0, 11, Short.MAX_VALUE))))
+                                        .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jButton6)
@@ -217,7 +216,7 @@ public class GUImanager extends javax.swing.JFrame {
                     .addComponent(jButton2)
                     .addComponent(jButton6))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Thêm sinh viên", jPanel2);
@@ -286,7 +285,7 @@ public class GUImanager extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -320,7 +319,7 @@ public class GUImanager extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 707, Short.MAX_VALUE)
+                .addComponent(jTabbedPane2)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -347,79 +346,36 @@ public class GUImanager extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
-        jTextField5.setText("");
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:                                                                                                                                                              
-        String msv = jTextField1.getText();
-        String ten = jTextField2.getText();
-        String ngaysinh = jTextField3.getText();
-        String lop = jTextField1.getText();
-        String nganh = jTextField5.getText();
-        
-        try{
-            if(msv.equals("")||ten.equals("")||ngaysinh.equals("")||lop.equals("")||nganh.equals("")){
-                JOptionPane.showMessageDialog(rootPane,"Thiếu thông tin");
-            }
-            else{
-                if(kiemtratrungma(msv)){
-                    Sinhvien std = new Sinhvien(msv, ten, ngaysinh, lop, nganh);
-                    tableModel.addRow(std.toArray());
-                    tableModel1.addRow(std.toArray());
-                    truyendulieu(std);
-                    list.add(std);
-                }
-                else{
-                    JOptionPane.showMessageDialog(rootPane,"Trùng mã sinh viên");
-                }
-            }
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(rootPane, e.getMessage());
-        } 
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        String msv=jTextField6.getText().toString();
-        if(kiemtratrungma(msv)==false){
-            for(int i=0;i<list.size();i++){
-                if(list.get(i).getMsv().equalsIgnoreCase(msv)){
-                    JOptionPane.showMessageDialog(rootPane,list.get(i).toArray());
-                    break;
-                }
-            }
-        }else{
-            JOptionPane.showMessageDialog(rootPane,"không có MSV");
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         String msv=jTextField6.getText();
         if(msv.equals("")){
-            JOptionPane.showMessageDialog(rootPane,"MSV đang trống");
+            int n=jTable3.getSelectedRow();
+            if(n>=0&&n<jTable3.getRowCount()){
+                tableModel1.removeRow(n);
+                tableModel.removeRow(n);
+                xoadulieu(list.get(n).getMsv());
+                list.remove(n);
+
+            }
         }else {
             if(!kiemtratrungma(msv)){
                 int row = 0;
                 for(int i=0;i<list.size();i++){
                     if(list.get(i).getMsv().equalsIgnoreCase(msv)){
                         list.remove(i);
-                         tableModel1.removeRow(i);
-                         tableModel.removeRow(i);
+                        tableModel1.removeRow(i);
+                        tableModel.removeRow(i);
                         break;
                     }
                 }
                 xoadulieu(msv);
-               // JOptionPane.showMessageDialog(rootPane,"DONE");
-               jTextField6.setText("");
+                // JOptionPane.showMessageDialog(rootPane,"DONE");
+                jTextField6.setText("");
             }
             else{
                 JOptionPane.showMessageDialog(rootPane,"không có MSV");
@@ -427,9 +383,31 @@ public class GUImanager extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+        String msv=jTextField6.getText().toString();
+        List<Sinhvien> list0=new ArrayList<>();
+        for (Sinhvien i:list) {
+            if(i.getMsv().contains(msv)){
+                list0.add(i);
+            }
+        }
+        tableModel1.setRowCount(0);
+        for (Sinhvien i: list0) {
+            tableModel1.addRow(i.toObject());
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        String ma=jTextField1.getText();
+        if(!kiemtratrungma(ma)){
+            JOptionPane.showMessageDialog(rootPane, "Trung ma");
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Ko co ma trung");
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -445,17 +423,45 @@ public class GUImanager extends javax.swing.JFrame {
         taoBangSV();
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String ma=jTextField1.getText();
-        if(!kiemtratrungma(ma)){
-            JOptionPane.showMessageDialog(rootPane, "Trung ma");
-        }
-        else{
-            JOptionPane.showMessageDialog(rootPane, "Ko co ma trung");
-        }
-    }//GEN-LAST:event_jButton7ActionPerformed
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String msv = jTextField1.getText();
+        String ten = jTextField2.getText();
+        String ngaysinh = jTextField3.getText();
+        String lop = jTextField1.getText();
+        String nganh = jTextField5.getText();
+
+        try{
+            if(msv.equals("")||ten.equals("")||ngaysinh.equals("")||lop.equals("")||nganh.equals("")){
+                JOptionPane.showMessageDialog(rootPane,"Thiếu thông tin");
+            }
+            else{
+                if(kiemtratrungma(msv)){
+                    Sinhvien std = new Sinhvien(msv, ten, ngaysinh, lop, nganh);
+                    tableModel.addRow(std.toObject());
+                    tableModel1.addRow(std.toObject());
+                    truyendulieu(std);
+                    list.add(std);
+                }
+                else{
+                    JOptionPane.showMessageDialog(rootPane,"Trùng mã sinh viên");
+                }
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+   
     private void truyendulieu(Sinhvien std) {
         Connection c = null;
         Statement stmt = null;
@@ -550,13 +556,13 @@ public class GUImanager extends javax.swing.JFrame {
         }
         
         for(Sinhvien i:list){
-            tableModel.addRow(i.toArray());
+            tableModel.addRow(i.toObject());
         }
     }
     
     public void taoBangSV1(){   
         for(Sinhvien i:list){
-            tableModel1.addRow(i.toArray());
+            tableModel1.addRow(i.toObject());
         }
     }
 

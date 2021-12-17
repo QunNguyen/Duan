@@ -5,11 +5,13 @@
  */
 package Enity;
 
+import java.io.Serializable;
+
 /**
  *
  * @author default
  */
-public class Sinhvien {
+public class Sinhvien implements Serializable{
     private String msv;
     private String ten;
     private String ngaysinh;
@@ -69,7 +71,7 @@ public class Sinhvien {
         this.nganh = nganh;
     }
     
-    public Object[] toArray(){
+    public Object[] toObject(){
         return new Object[]{msv,ten,ngaysinh,lop,nganh};
     }
     
